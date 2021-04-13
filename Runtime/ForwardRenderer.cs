@@ -273,7 +273,7 @@ namespace UnityEngine.Rendering.Universal
 
             // Assign the camera color target early in case it is needed during AddRenderPasses.
             bool isPreviewCamera = cameraData.isPreviewCamera;
-            var createColorTexture = !isPreviewCamera;
+            var createColorTexture = false;
             if (createColorTexture)
             {
                 m_ActiveCameraColorAttachment = m_CameraColorAttachment;
@@ -738,6 +738,8 @@ namespace UnityEngine.Rendering.Universal
         /// <returns>Return true if pipeline needs to render to a intermediate render texture.</returns>
         bool RequiresIntermediateColorTexture(ref CameraData cameraData)
         {
+            return cameraData.isSceneViewCamera;
+        
             // When rendering a camera stack we always create an intermediate render texture to composite camera results.
             // We create it upon rendering the Base camera.
             if (cameraData.renderType == CameraRenderType.Base && !cameraData.resolveFinalTarget)
